@@ -26,6 +26,7 @@ This policy enables the Lambda function to interact with the specified AWS servi
 <strong><br>4) Adding S3 event notification trigger:</strong><br>
 As soon as the user uploads any image file in the S3 bucket. The lambda function gets notified immediately and will start performing the task of retrieving the image and sending it to textract for extraction of text.
 ![3) s3trigger](https://github.com/user-attachments/assets/47fd68f8-b15c-4a74-b5ad-b4975033f9e8)
+![trigger](https://github.com/user-attachments/assets/d6ea5b00-afb4-44ce-9bbb-e137945ad71e)
 
 <strong><br>5) Creating DynamoDB table (patientdetails):</strong>
 ![5) dynamodb table](https://github.com/user-attachments/assets/4be7a2d8-a4c5-4628-b7ac-1303916b63d9)
