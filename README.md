@@ -39,7 +39,7 @@ As soon as the user uploads any image file in the S3 bucket. The lambda function
 <strong><br>7) Successfully logging details in Cloudwatch log:</strong>
 ![7) logdata](https://github.com/user-attachments/assets/46abbc37-e021-405b-8182-afd6010aa6fc)
 
-<strong><br>7) Successfully data is written to DyanamoDB:</strong>
+<strong><br>7) Successfully data is written to DynamoDB:</strong>
 
 ![8) dynamodb](https://github.com/user-attachments/assets/84b57d7d-6943-495d-a3ab-73b0c96b5410)
 
