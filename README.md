@@ -1,55 +1,63 @@
-# Patient-Information-Extraction-System
-
+# Patient Information Extraction System
+This project implements an **AWS Lambda function** that extracts patient information from documents stored in **Amazon S3**. The system uses **Amazon Textract** to analyze documents, extracting key details such as patient name, age, and disease, which are then saved to an **Amazon DynamoDB** table for further use and management.
 ![Screenshot_1](https://github.com/user-attachments/assets/61d0adff-f22f-4b7c-a3c5-22ebd863c831)
 
-This project is an AWS Lambda function that extracts patient information from documents stored in Amazon S3. It uses Amazon Textract to read and analyze the documents, capturing data such as patient name, age, and disease. The extracted information is then saved in a DynamoDB table for easy access and management.
+## Features
+- **Automatic Processing**: The Lambda function is triggered whenever new documents are uploaded to the S3 bucket.
+- **Data Extraction**: Extracts key patient details (name, age, disease) from uploaded medical documents.
+- **Storage**: The extracted data is saved in a DynamoDB table, making it easy to access and manage patient information.
 
-•	<u><strong>Automatic Processing:</u></strong> Activates when new documents are uploaded to S3.<br>
-•<u><strong>	Data Extraction:</u></strong> Retrieves patient details from various document formats.<br>
-•<u><strong>	Storage:</u></strong> Saves extracted information in DynamoDB for organization.
+## Services Used
+- **AWS Lambda**
+- **Amazon S3**
+- **Amazon Textract**
+- **Amazon DynamoDB**
+- **Amazon CloudWatch** (for logging)
 
-<u><strong>Services Used:</u></strong> AWS Lambda, Amazon S3, Amazon Textract, Amazon DynamoDB
+## Workflow
 
-# Steps Taken:<br>
-<strong>1) Creating an S3 bucket (uploadmedical-images):</strong>
+### 1. **Creating an S3 Bucket**
+The S3 bucket, named `uploadmedical-images`, is used to store the images from which patient details will be extracted.
 
-![1) S3 bucket](https://github.com/user-attachments/assets/320177b5-003b-4d74-93c6-4ff8408b36b7)
+![1) S3 Bucket](https://github.com/user-attachments/assets/320177b5-003b-4d74-93c6-4ff8408b36b7)
 
-<strong><br>2) Creating lambda python function (retrievimage):</strong><br>
-<strong>Note: python code is available in the repository </strong>
-![2) lambda function](https://github.com/user-attachments/assets/245a1e38-1a16-4884-a559-54914d0a4491)
+### 2. **Creating Lambda Python Function**
+The Lambda function `retrievimage` processes the images uploaded to S3. It uses **Amazon Textract** to extract text data from images and then stores the relevant information in DynamoDB.
 
-<strong><br>3) IAM role for lambda (S3, DynamoDB, Textract, Cloudwatch Log Access):</strong><br>
-This policy enables the Lambda function to interact with the specified AWS services and resources effectively.
-![4) full dynamo access, s3 fullaccess, texract policy](https://github.com/user-attachments/assets/99f893da-9f44-4d1f-87d5-99bf99d45bf1)
+**Note:** The Python code for the Lambda function is available in the repository.
 
-<strong><br>4) Adding S3 event notification trigger:</strong><br>
-As soon as the user uploads any image file in the S3 bucket. The lambda function gets notified immediately and will start performing the task of retrieving the image and sending it to textract for extraction of text.
-![3) s3trigger](https://github.com/user-attachments/assets/47fd68f8-b15c-4a74-b5ad-b4975033f9e8)
-![trigger](https://github.com/user-attachments/assets/d6ea5b00-afb4-44ce-9bbb-e137945ad71e)
+![2) Lambda Function](https://github.com/user-attachments/assets/245a1e38-1a16-4884-a559-54914d0a4491)
 
-<strong><br>5) Creating DynamoDB table (patientdetails):</strong>
-![5) dynamodb table](https://github.com/user-attachments/assets/4be7a2d8-a4c5-4628-b7ac-1303916b63d9)
+### 3. **IAM Role for Lambda**
+An IAM role with the necessary permissions for Lambda is created, allowing it to access **S3**, **DynamoDB**, **Textract**, and **CloudWatch Logs**. This ensures the Lambda function can interact with all required AWS services.
 
-<strong><br>6) Testing by uploading the image:</strong>
-# [Test image]
-![john_doe](https://github.com/user-attachments/assets/ceeca757-a627-48af-8729-3b053bbc5d39)
+![IAM Role for Lambda](https://github.com/user-attachments/assets/99f893da-9f44-4d1f-87d5-99bf99d45bf1)
 
-![6) file upload](https://github.com/user-attachments/assets/e6b3ef8d-124b-4170-8bcb-9efb5fcfd46e)
+### 4. **S3 Event Notification Trigger**
+An event notification trigger is set up on the S3 bucket. When a new image is uploaded, the Lambda function is automatically triggered to start processing the image and sending it to **Amazon Textract** for text extraction.
 
-<strong><br>7) Successfully logging details in Cloudwatch log:</strong>
-![7) logdata](https://github.com/user-attachments/assets/46abbc37-e021-405b-8182-afd6010aa6fc)
+![S3 Trigger](https://github.com/user-attachments/assets/47fd68f8-b15c-4a74-b5ad-b4975033f9e8)
 
-<strong><br>7) Successfully data is written to DynamoDB:</strong>
+### 5. **Creating DynamoDB Table (patientdetails)**
+A DynamoDB table called `patientdetails` is created to store the extracted patient information.
 
-![8) dynamodb](https://github.com/user-attachments/assets/84b57d7d-6943-495d-a3ab-73b0c96b5410)
+![DynamoDB Table](https://github.com/user-attachments/assets/4be7a2d8-a4c5-4628-b7ac-1303916b63d9)
 
+### 6. **Testing: Uploading Image**
+A test image (e.g., a patient's medical report) is uploaded to the S3 bucket. This triggers the Lambda function, which processes the image and extracts the relevant details.
 
+**Test Image:**
+![Test Image](https://github.com/user-attachments/assets/ceeca757-a627-48af-8729-3b053bbc5d39)
 
+**File Upload Process:**
+![File Upload](https://github.com/user-attachments/assets/e6b3ef8d-124b-4170-8bcb-9efb5fcfd46e)
 
+### 7. **Logging Details in CloudWatch**
+The Lambda function successfully logs data to **Amazon CloudWatch** for monitoring and troubleshooting purposes.
 
+![CloudWatch Log](https://github.com/user-attachments/assets/46abbc37-e021-405b-8182-afd6010aa6fc)
 
+### 8. **Data Written to DynamoDB**
+Once the patient details are extracted, they are stored in the **DynamoDB table** for easy access and management.
 
-
-
-
+![DynamoDB Data](https://github.com/user-attachments/assets/84b57d7d-6943-495d-a3ab-73b0c96b5410)
